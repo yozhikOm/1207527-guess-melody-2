@@ -1,12 +1,15 @@
 import * as React from 'react';
 import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 
-const App = (props) => {
-  const {gameTime, errorCount} = props;
+const settings = {
+  gameTime: 10,
+  errorCount: 2,
+};
 
-  return <WelcomeScreen 
-    gameTime={gameTime}
-    errorCount={errorCount}
+const App = () => {
+  return <WelcomeScreen
+    gameTime={settings.gameTime}
+    errorCount={settings.errorCount}
   />;
 };
 
