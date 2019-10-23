@@ -10,6 +10,7 @@ const App = () => {
   return <WelcomeScreen
     gameTime={settings.gameTime}
     errorCount={settings.errorCount}
+    onClickStartButton={() => {alert(`HEy!`)}}
   />;
 };
 
