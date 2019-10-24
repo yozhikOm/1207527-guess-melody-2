@@ -16,6 +16,7 @@ exports[`App компонент рендерится корректно 1`] = `
   </div>
   <button
     className="welcome__button"
+    onClick={[Function]}
   >
     <span
       className="visually-hidden"
