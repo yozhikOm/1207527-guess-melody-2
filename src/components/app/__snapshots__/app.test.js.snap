@@ -16,7 +16,6 @@ exports[`App компонент рендерится корректно 1`] = `
   </div>
   <button
     className="welcome__button"
-    onClick={[Function]}
   >
     <span
       className="visually-hidden"
@@ -39,12 +38,12 @@ exports[`App компонент рендерится корректно 1`] = `
   >
     <li>
       За 
-      10
+      8
        минут нужно ответить на все вопросы.
     </li>
     <li>
       Можно допустить 
-      2
+      8
        ошибки.
     </li>
   </ul>

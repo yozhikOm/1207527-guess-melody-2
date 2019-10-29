@@ -16,26 +16,48 @@ class App extends PureComponent {
     const {
       gameTime,
       errorCount,
-      onClickStartButton,
       questions,
     } = this.props;
 
-    return <WelcomeScreen
-      gameTime={gameTime}
-      errorCount={errorCount}
-      onClickStartButton={onClickStartButton}
-    />;
+    const {question} = this.state;
+
+    return this._getScreen(question, () => {
+      this.setState((prevState) => ({
+        prevState,
+        questions: prevState.question + 1,
+      }));
+    });
+  }
+
+  _getScreen(question, onUserAnswer) {
+    if (question === -1) {
+      const {
+        gameTime,
+        errorCount,
+      } = this.props;
+
+      return <WelcomeScreen
+        gameTime={gameTime}
+        errorCount={errorCount}
+        onStartButtonClick={onUserAnswer}
+      />;
+    }
+
+    const {questions} = this.props;
+    return <div>
+        Игра на вопрос типа {questions[question].type}
+    </div>;
   }
 }
 
 App.propTypes = {
-  gameTime: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  onClickStartButton: PropTypes.func,
+  gameTime: PropTypes.number, // .isRequired,
+  errorCount: PropTypes.number, // .isRequired,
+  onStartButtonClick: PropTypes.func,
   questions: PropTypes.arrayOf(
       PropTypes.shape({
         type: PropTypes.string.isRequired,
-        genre: PropTypes.number.isRequired,
+        genre: PropTypes.string.isRequired,
         answers: PropTypes.arrayOf(
             PropTypes.shape({
               src: PropTypes.string.isRequired,
@@ -43,7 +65,7 @@ App.propTypes = {
             }).isRequired
         ).isRequired,
       }).isRequired
-  ).isRequired,
+  ) // .isRequired,
 };
 
 export {App};
