@@ -1,9 +1,43 @@
-import {PureComponent} from 'react';
 import * as React from 'react';
-import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 import PropTypes from "prop-types";
+import {PureComponent} from 'react';
+import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
+import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
+import { ArtistQuestionScreen } from '../artist-question-screen/artist-question-screen.jsx';
 
 class App extends PureComponent {
+  static getScreen(question, props, onUserAnswer) {
+    if (question === -1) {
+      const {
+        gameTime,
+        errorCount,
+      } = props;
+
+      return <WelcomeScreen
+        gameTime={gameTime}
+        errorCount={errorCount}
+        onStartButtonClick={onUserAnswer}
+      />;
+    }
+
+    const {questions} = props;
+    const currQuestion = questions[question];
+
+    switch(currQuestion.type){
+      case `genre`: return <GenreQuestionScreen
+        question={currQuestion}
+        onAnswer={onUserAnswer}
+      />;
+
+      case `artist`: return <ArtistQuestionScreen
+        question={currQuestion}
+        onAnswer={onUserAnswer}
+      />;
+    }
+    
+    return null;
+  }
+
   constructor(props) {
     super(props);
 
@@ -21,33 +55,19 @@ class App extends PureComponent {
 
     const {question} = this.state;
 
-    return this._getScreen(question, () => {
-      this.setState((prevState) => ({
-        prevState,
-        questions: prevState.question + 1,
-      }));
+    return App.getScreen(question, this.props, () => {
+      this.setState((prevState) => {
+        const nextIndex = prevState.question + 1;
+        const isEnd = nextIndex >= questions.length;
+  
+        return { 
+          question: !isEnd ? nextIndex : -1,
+        };
+      });
     });
   }
 
-  _getScreen(question, onUserAnswer) {
-    if (question === -1) {
-      const {
-        gameTime,
-        errorCount,
-      } = this.props;
-
-      return <WelcomeScreen
-        gameTime={gameTime}
-        errorCount={errorCount}
-        onStartButtonClick={onUserAnswer}
-      />;
-    }
-
-    const {questions} = this.props;
-    return <div>
-        Игра на вопрос типа {questions[question].type}
-    </div>;
-  }
+  
 }
 
 App.propTypes = {
@@ -57,11 +77,11 @@ App.propTypes = {
   questions: PropTypes.arrayOf(
       PropTypes.shape({
         type: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
+        genre: PropTypes.string,
         answers: PropTypes.arrayOf(
             PropTypes.shape({
-              src: PropTypes.string.isRequired,
-              genre: PropTypes.string.isRequired,
+              src: PropTypes.string,
+              genre: PropTypes.string,
             }).isRequired
         ).isRequired,
       }).isRequired
