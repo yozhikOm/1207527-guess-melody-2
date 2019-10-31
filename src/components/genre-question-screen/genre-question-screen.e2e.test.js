@@ -1,24 +1,31 @@
 import React from 'react';
-import Enzyme, {mount} from 'enzyme';
+import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {GenreQuestionScreen} from './genre-question-screen.jsx';
 
 Enzyme.configure({adapter: new Adapter()});
 
-describe(`Enzyme тест клика кпонки`, () => {
+describe(`Enzyme тест submit'а формы`, () => {
   it(`Кнопка нажимается`, () => {
+
     const mockQuestion = {
       answers: [
         {
-          src: `mock answer source`,
-          genre: `mock answer genre`,
-        },
+          src: `mock src`,
+          genre: `mock genre`
+        }
       ],
-      genre: `mock genre`
+      genre: `mock current genre`
     };
+
     const mockButtonClick = jest.fn();
-    const wrapper = mount(<GenreQuestionScreen question={mockQuestion} onAnswer={mockButtonClick}/>);
-    wrapper.find(`button`).at(0).simulate(`click`);
+    const mockPreventDefault = jest.fn();
+    const mockEvent = {
+      preventDefault: mockPreventDefault
+    };
+
+    const wrapper = shallow(<GenreQuestionScreen question={mockQuestion} onAnswer={mockButtonClick}/>);
+    wrapper.find(`form`).simulate(`submit`, mockEvent);
     expect(mockButtonClick).toHaveBeenCalled();
   });
 });

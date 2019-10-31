@@ -8,6 +8,7 @@ import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-sc
 class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
     if (question === -1) {
+
       const {
         gameTime,
         errorCount,
