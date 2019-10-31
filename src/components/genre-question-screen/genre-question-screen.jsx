@@ -55,4 +55,17 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
   );
 };
 
+GenreQuestionScreen.propTypes = {
+  question: PropTypes.shape({
+    answers: PropTypes.arrayOf(
+        PropTypes.shape({
+          src: PropTypes.string,
+          genre: PropTypes.string,
+        })
+    ),
+    genre: PropTypes.string,
+  }),
+  onAnswer: PropTypes.func,
+};
+
 export {GenreQuestionScreen};

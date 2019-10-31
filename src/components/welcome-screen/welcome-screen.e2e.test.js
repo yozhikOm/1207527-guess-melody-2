@@ -8,7 +8,7 @@ Enzyme.configure({adapter: new Adapter()});
 describe(`Enzyme тест клика кпонки`, () => {
   it(`Кнопка нажимается`, () => {
     const mockStartClick = jest.fn();
-    const wrapper = shallow(<WelcomeScreen onClickStartButton={mockStartClick}/>);
+    const wrapper = shallow(<WelcomeScreen onStartButtonClick={mockStartClick}/>);
     wrapper.find(`button`).at(0).simulate(`click`);
     expect(mockStartClick).toHaveBeenCalled();
   });

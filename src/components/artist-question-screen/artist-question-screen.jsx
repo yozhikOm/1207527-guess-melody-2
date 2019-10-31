@@ -56,4 +56,16 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
   );
 };
 
+ArtistQuestionScreen.propTypes = {
+  question: PropTypes.shape({
+    answers: PropTypes.arrayOf(
+        PropTypes.shape({
+          picture: PropTypes.string,
+          artist: PropTypes.string,
+        })
+    ),
+  }),
+  onAnswer: PropTypes.func,
+};
+
 export {ArtistQuestionScreen};

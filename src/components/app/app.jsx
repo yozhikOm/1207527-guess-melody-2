@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {PureComponent} from 'react';
 import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
-import { ArtistQuestionScreen } from '../artist-question-screen/artist-question-screen.jsx';
+import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
 
 class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
@@ -23,7 +23,7 @@ class App extends PureComponent {
     const {questions} = props;
     const currQuestion = questions[question];
 
-    switch(currQuestion.type){
+    switch (currQuestion.type) {
       case `genre`: return <GenreQuestionScreen
         question={currQuestion}
         onAnswer={onUserAnswer}
@@ -34,7 +34,7 @@ class App extends PureComponent {
         onAnswer={onUserAnswer}
       />;
     }
-    
+
     return null;
   }
 
@@ -48,8 +48,8 @@ class App extends PureComponent {
 
   render() {
     const {
-      gameTime,
-      errorCount,
+      // gameTime,
+      // errorCount,
       questions,
     } = this.props;
 
@@ -59,15 +59,13 @@ class App extends PureComponent {
       this.setState((prevState) => {
         const nextIndex = prevState.question + 1;
         const isEnd = nextIndex >= questions.length;
-  
-        return { 
+
+        return {
           question: !isEnd ? nextIndex : -1,
         };
       });
     });
   }
-
-  
 }
 
 App.propTypes = {
