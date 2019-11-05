@@ -13,7 +13,12 @@ describe(`Enzyme тест change'а формы`, () => {
           picture: `mock picture`,
           artist: `mock artist`
         }
-      ]
+      ],
+      song: {
+        artist: `mock artist`,
+        src: `https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Checkie_Brown/hey/Checkie_Brown_-_08_-_Hippie_Bulle_-Stoned_Funghi_CB_28.mp3`,
+      },
+      type: `artist`,
     };
 
     const mockButtonClick = jest.fn();

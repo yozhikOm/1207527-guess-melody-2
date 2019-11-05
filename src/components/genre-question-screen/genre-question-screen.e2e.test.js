@@ -12,10 +12,11 @@ describe(`Enzyme тест submit'а формы`, () => {
       answers: [
         {
           src: `mock src`,
-          genre: `mock genre`
+          genre: `rock`
         }
       ],
-      genre: `mock current genre`
+      genre: `rock`,
+      type: `genre`,
     };
 
     const mockButtonClick = jest.fn();
