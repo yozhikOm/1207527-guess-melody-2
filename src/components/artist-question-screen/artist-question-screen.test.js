@@ -5,20 +5,23 @@ import {questions} from '../../mocks/questions.js';
 
 it(`ArtistQuestionScreen компонент рендерится корректно`, () => {
   const mockButtonClick = jest.fn();
-  /* const mockQuestion = {
-    answers: [
-      {
-        picture: `mock picture`,
-        artist: `mock artist`
-      }
-    ],
-    song: {
-      artist: `mock artist`,
-      src: `https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Checkie_Brown/hey/Checkie_Brown_-_08_-_Hippie_Bulle_-Stoned_Funghi_CB_28.mp3`,
-    },
-    type: `artist`,
-  };*/
+  const mockQuestion = questions.find((q) => q.type === `artist`);
 
-  const artistQuestionScreenComponent = renderer.create(<ArtistQuestionScreen question={questions[2]} onAnswer={mockButtonClick}/>).toJSON();
+  const createNodeMock = () => {
+    return {
+      oncanplaythrough: null,
+      onplay: null,
+      onpause: null,
+      ontimeupdate: null,
+      src: ``
+    };
+  };
+
+  const artistQuestionScreenComponent = renderer.create(
+      <ArtistQuestionScreen
+        question={mockQuestion}
+        onAnswer={mockButtonClick}/>,
+      {createNodeMock})
+      .toJSON();
   expect(artistQuestionScreenComponent).toMatchSnapshot();
 });

@@ -3,24 +3,22 @@ import {AudioPlayer} from './audioplayer.jsx';
 import renderer from 'react-test-renderer';
 
 it(`App компонент рендерится корректно`, () => {
-  const mockFunc = jest.fn();
+  const mockPlayerProps = {
+    isPlaying: false,
+    onPlayButtonClick: jest.fn(),
+    src: ``
+  };
 
-  const audioPlayerComponent = renderer.create(<AudioPlayer
-    isPlaying={false}
-    onPlayButtonClick={mockFunc}
-    src="http://www.hochmuth.com/mp3/Vivaldi_Sonata_eminor_.mp3"
-  />,
-  {
-    createNodeMock: () => {
-      return {
-        oncanplaythrough: null,
-        onplay: null,
-        onpause: null,
-        ontimeupdate: null,
-        src: ``
-      };
-    }
-  }
-  ).toJSON();
+  const createNodeMock = () => {
+    return {
+      oncanplaythrough: null,
+      onplay: null,
+      onpause: null,
+      ontimeupdate: null,
+      src: ``
+    };
+  };
+
+  const audioPlayerComponent = renderer.create(<AudioPlayer {...mockPlayerProps} />, {createNodeMock}).toJSON();
   expect(audioPlayerComponent).toMatchSnapshot();
 });
