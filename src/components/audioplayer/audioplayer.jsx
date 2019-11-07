@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-class AudioPlayer extends React.PureComponent {
+class AudioPlayer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -91,6 +91,12 @@ AudioPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   src: PropTypes.string.isRequired,
+};
+
+AudioPlayer.defaultProps = {
+  isPlaying: false,
+  onPlayButtonClick: () => {},
+  src: `http://www.hochmuth.com/mp3/Vivaldi_Sonata_eminor_.mp3`,
 };
 
 export {AudioPlayer};
