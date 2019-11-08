@@ -1,9 +1,7 @@
 import React, {PureComponent} from 'react';
-import PropTypes from "prop-types";
-import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
-import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
-import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
+import PropTypes from 'prop-types';
 import {Header} from '../header/header.jsx';
+import {Screen} from '../screen/screen.jsx';
 
 const Type = {
   ARTIST: `game--artist`,
@@ -19,50 +17,33 @@ class App extends PureComponent {
     };
   }
 
-  _getScreen(question, onUserAnswer) {
-    if (!question) {
+  _incrementQIndex() {
+    const {questionIndex} = this.state;
 
-      const {
-        gameTime,
-        errorCount,
-      } = this.props;
-
-      return <WelcomeScreen
-        gameTime={gameTime}
-        errorCount={errorCount}
-        onStartButtonClick={onUserAnswer}
-      />;
-    }
-
-    switch (question.type) {
-      case `genre`: return <GenreQuestionScreen
-        question={question}
-        onAnswer={onUserAnswer}
-      />;
-
-      case `artist`: return <ArtistQuestionScreen
-        question={question}
-        onAnswer={onUserAnswer}
-      />;
-    }
-
-    return null;
+    this.setState({
+      questionIndex: questionIndex + 1 >= this.props.questions.length
+        ? -1
+        : questionIndex + 1,
+    });
   }
 
   render() {
+    const {
+      gameTime,
+      errorCount,
+    } = this.props;
+
     const {questions} = this.props;
     const {questionIndex} = this.state;
+
+    const question = questions[questionIndex];
+    const gameSettings = ({gameTime}, {errorCount});
 
     return <section className={`game ${Type.ARTIST}`}>
       {this.state.questionIndex !== -1 && <Header/>}
 
-      {this._getScreen(questions[questionIndex], () => {
-        this.setState({
-          questionIndex: questionIndex + 1 >= questions.length
-            ? -1
-            : questionIndex + 1,
-        });
-      })}
+      <Screen gameSettings={gameSettings} question={question} onUserAnswer={this._incrementQIndex.bind(this)}/>
+
     </section>;
   }
 }
@@ -86,4 +67,3 @@ App.propTypes = {
 };
 
 export {App};
-
