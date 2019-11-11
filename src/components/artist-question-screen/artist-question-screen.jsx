@@ -1,40 +1,31 @@
-import * as React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import {AudioPlayer} from '../audioplayer/audioplayer.jsx';
 
-const ArtistQuestionScreen = ({question, onAnswer}) => {
-  const {
-    answers,
-  } = question;
+class ArtistQuestionScreen extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <section className="game game--artist">
-      <header className="game__header">
-        <a className="game__back">
-          <span className="visually-hidden">Сыграть ещё раз</span>
-          <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию" />
-        </a>
+    this.state = {
+      isPlaying: false,
+    };
+  }
 
-        <div className="timer__value">
-          <span className="timer__mins">05</span>
-          <span className="timer__dots">:</span>
-          <span className="timer__secs">00</span>
-        </div>
+  render() {
+    const {question, onAnswer} = this.props;
+    const {isPlaying} = this.state;
+    const {answers, song} = question;
 
-        <div className="game__mistakes">
-          <div className="wrong"></div>
-          <div className="wrong"></div>
-          <div className="wrong"></div>
-        </div>
-      </header>
-
+    return (
       <section className="game__screen">
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
           <div className="track">
-            <button className="track__button track__button--play" type="button" />
-            <div className="track__status">
-              <audio />
-            </div>
+            <AudioPlayer
+              isPlaying={isPlaying}
+              onPlayButtonClick={() => this.setState({isPlaying: !isPlaying})}
+              src={song.src}
+            />
           </div>
         </div>
 
@@ -52,20 +43,24 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
           })}
         </form>
       </section>
-    </section>
-  );
-};
+    );
+  }
+
+}
 
 ArtistQuestionScreen.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
   question: PropTypes.shape({
-    answers: PropTypes.arrayOf(
-        PropTypes.shape({
-          picture: PropTypes.string,
-          artist: PropTypes.string,
-        })
-    ),
-  }),
-  onAnswer: PropTypes.func,
+    answers: PropTypes.arrayOf(PropTypes.shape({
+      artist: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+    })).isRequired,
+    song: PropTypes.shape({
+      artist: PropTypes.string.isRequired,
+      src: PropTypes.string.isRequired,
+    }).isRequired,
+    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
+  }).isRequired,
 };
 
 export {ArtistQuestionScreen};
