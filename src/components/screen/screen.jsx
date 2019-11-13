@@ -4,7 +4,7 @@ import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
 import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
 
-const Screen = ({gameSettings, question, onUserAnswer}) => {
+const Screen = ({gameSettings, question, onWelcomeScreenClick, onUserAnswer}) => {
   if (!question) {
     const {
       gameTime,
@@ -14,7 +14,7 @@ const Screen = ({gameSettings, question, onUserAnswer}) => {
     return <WelcomeScreen
       gameTime={gameTime}
       errorCount={errorCount}
-      onStartButtonClick={onUserAnswer}
+      onStartButtonClick={onWelcomeScreenClick}
     />;
   }
 

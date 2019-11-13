@@ -45,7 +45,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case `INCREMENT_STEP`: return Object.assing({}, state, {
+    case `INCREMENT_STEP`: return Object.assign({}, state, {
       step: state.step + action.payload,
     });
 
@@ -57,4 +57,11 @@ const reducer = (state = initialState, action) => {
   }
 
   return state;
+};
+
+export {
+  ActionCreator,
+  isArtistAnswerCorrect,
+  isGenreAnswerCorrect,
+  reducer,
 };
