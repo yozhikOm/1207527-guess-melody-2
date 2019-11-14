@@ -10,9 +10,14 @@ describe(`Enzyme тест change'а формы`, () => {
   it(`Кнопка нажимается`, () => {
     const mockButtonClick = jest.fn();
     const mockQuestion = questions.find((q) => q.type === `artist`);
+    const mockEvent = {
+      target: {
+        id: `answer-1`
+      }
+    };
 
     const wrapper = shallow(<ArtistQuestionScreen question={mockQuestion} onAnswer={mockButtonClick}/>);
-    wrapper.find(`form`).simulate(`change`);
+    wrapper.find(`form`).simulate(`change`, mockEvent);
     expect(mockButtonClick).toHaveBeenCalled();
   });
 });

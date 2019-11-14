@@ -9,12 +9,24 @@ class ArtistQuestionScreen extends PureComponent {
     this.state = {
       isPlaying: false,
     };
+
+    this._handleFormChange = this._handleFormChange.bind(this);
+  }
+
+  _handleFormChange(evt) {
+    const {question, onAnswer} = this.props;
+    const {answers} = question;
+
+    const i = evt.target.id.split(`-`)[1];
+    const userAnswer = answers[i];
+
+    onAnswer(userAnswer);
   }
 
   render() {
-    const {question, onAnswer} = this.props;
-    const {isPlaying} = this.state;
+    const {question} = this.props;
     const {answers, song} = question;
+    const {isPlaying} = this.state;
 
     return (
       <section className="game__screen">
@@ -29,11 +41,17 @@ class ArtistQuestionScreen extends PureComponent {
           </div>
         </div>
 
-        <form className="game__artist" onChange={onAnswer}>
+        <form className="game__artist" onChange={this._handleFormChange}>
           {answers.map((it, i) => {
             return (
               <div key={`answer-${i}`} className="artist">
-                <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`} />
+                <input
+                  className="artist__input visually-hidden"
+                  type="radio"
+                  name="answer"
+                  value={`answer-${i}`}
+                  id={`answer-${i}`}
+                />
                 <label className="artist__name" htmlFor={`answer-${i}`}>
                   <img className="artist__picture" src={it.picture} alt={it.artist} />
                   {it.artist}
