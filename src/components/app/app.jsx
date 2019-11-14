@@ -15,10 +15,14 @@ class App extends PureComponent {
   render() {
     const {questions, gameTime, errorCount, mistakes, onWelcomeScreenClick, step, onUserAnswer} = this.props;
     const question = questions[step];
-    const gameSettings = ({gameTime}, {errorCount});
+    
+    const gameSettings = {
+      gameTime: gameTime,
+      errorCount: errorCount,
+    }
 
     return <section className={`game ${Type.ARTIST}`}>
-      {step !== -1 && <Header/>}
+      {step !== -1 && <Header mistakes={mistakes}/>}
 
       <Screen gameSettings={gameSettings} question={question} mistakes={mistakes} onWelcomeScreenClick={onWelcomeScreenClick} onUserAnswer={onUserAnswer}/>
 

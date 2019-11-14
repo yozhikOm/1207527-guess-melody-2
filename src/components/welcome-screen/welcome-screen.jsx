@@ -31,9 +31,4 @@ WelcomeScreen.propTypes = {
   onStartButtonClick: PropTypes.func
 };
 
-WelcomeScreen.defaultProps = {
-  gameTime: 8,
-  errorCount: 8,
-};
-
 export {WelcomeScreen};
