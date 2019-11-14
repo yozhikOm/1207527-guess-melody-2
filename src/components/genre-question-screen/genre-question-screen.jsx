@@ -6,13 +6,28 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
+    const {question} = this.props;
+    const {answers} = question;
+
     this.state = {
       activePlayer: -1,
+      userAnswer: new Array(answers.length).fill(false),
     };
+
+    this._handleCheckboxChange = this._handleCheckboxChange.bind(this);
+  }
+
+  _handleCheckboxChange(evt) {
+    const isChecked = evt.target.checked;
+    const i = evt.target.id.split(`-`)[1];
+
+    this.setState((state) => {
+      state.userAnswer[i] = isChecked;
+    });
   }
 
   render() {
-    const {question, onAnswer} = this.props;
+    const {question, step, onAnswer} = this.props;
     const {answers, genre} = question;
 
     return (
@@ -20,11 +35,11 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer();
+          onAnswer(this.state.userAnswer);
         }}>
           {answers.map((it, i) => {
             return (
-              <div key={`answer-${i}`} className="track">
+              <div key={`${step}-answer-${i}`} className="track">
                 <AudioPlayer
                   src={it.src}
                   isPlaying={i === this.state.activePlayer}
@@ -33,7 +48,14 @@ class GenreQuestionScreen extends PureComponent {
                   })}
                 />
                 <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`} id={`answer-${i}`} />
+                  <input
+                    className="game__input visually-hidden"
+                    type="checkbox"
+                    name="answer"
+                    value={`answer-${i}`}
+                    id={`answer-${i}`}
+                    onChange={this._handleCheckboxChange}
+                  />
                   <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
                 </div>
               </div>
@@ -56,6 +78,7 @@ GenreQuestionScreen.propTypes = {
     genre: PropTypes.oneOf([`rock`, `jazz`, `blues`, `classic`, `pop`, `folk`]).isRequired,
     type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
   }).isRequired,
+  step: PropTypes.number,
 };
 
 export {GenreQuestionScreen};

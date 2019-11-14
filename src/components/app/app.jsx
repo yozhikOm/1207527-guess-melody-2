@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import {ActionCreator} from "../../reducer.js";
 
 import {Header} from '../header/header.jsx';
@@ -12,45 +12,15 @@ const Type = {
 };
 
 class App extends PureComponent {
-  /* constructor(props) {
-    super(props);
-
-    this.state = {
-      questionIndex: -1,
-    };
-  }*/
-
-  /* _incrementQIndex() {
-    const {questionIndex} = this.state;
-
-    this.setState({
-      questionIndex: questionIndex + 1 >= this.props.questions.length
-        ? -1
-        : questionIndex + 1,
-    });
-  }*/
-
   render() {
-    /* const {
-      gameTime,
-      errorCount,
-    } = this.props;*/
-
-    /* const {questions} = this.props;
-    const {questionIndex} = this.state;
-
-    const question = questions[questionIndex];
-    const gameSettings = ({gameTime}, {errorCount});*/
-    
-    // const {questions, gameTime, errorCount, step, mistakes, onUserAnswer} = this.props;
-    const {questions, gameTime, errorCount, onWelcomeScreenClick, step, onUserAnswer} = this.props;
+    const {questions, gameTime, errorCount, mistakes, onWelcomeScreenClick, step, onUserAnswer} = this.props;
     const question = questions[step];
     const gameSettings = ({gameTime}, {errorCount});
 
     return <section className={`game ${Type.ARTIST}`}>
       {step !== -1 && <Header/>}
 
-      <Screen gameSettings={gameSettings} question={question} onWelcomeScreenClick={onWelcomeScreenClick} onUserAnswer={onUserAnswer}/>
+      <Screen gameSettings={gameSettings} question={question} mistakes={mistakes} onWelcomeScreenClick={onWelcomeScreenClick} onUserAnswer={onUserAnswer}/>
 
     </section>;
   }
@@ -69,7 +39,6 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   step: state.step,
   mistakes: state.mistakes,
-  gameTime: state.gameTime
 });
 
 const mapDispatchToProps = (dispatch) => ({

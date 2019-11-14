@@ -13,6 +13,8 @@ it(`Screen компонент рендерится корректно`, () => {
 
   const mockButtonClick = jest.fn();
 
+  const mockMistakes = 0;
+
   const createNodeMock = () => {
     return {
       oncanplaythrough: null,
@@ -27,7 +29,10 @@ it(`Screen компонент рендерится корректно`, () => {
       <Screen
         gameSettings={mockSettings}
         question={mockQuestion1}
-        onUserAnswer={mockButtonClick}/>,
+        mistakes={mockMistakes}
+        onUserAnswer={mockButtonClick}
+        onWelcomeScreenClick={mockButtonClick}
+      />,
       {createNodeMock}
   ).toJSON();
   expect(screenComponent1).toMatchSnapshot();
@@ -36,7 +41,10 @@ it(`Screen компонент рендерится корректно`, () => {
       <Screen
         gameSettings={mockSettings}
         question={mockQuestion2}
-        onUserAnswer={mockButtonClick}/>,
+        mistakes={mockMistakes}
+        onUserAnswer={mockButtonClick}
+        onWelcomeScreenClick={mockButtonClick}
+      />,
       {createNodeMock}
   ).toJSON();
   expect(screenComponent2).toMatchSnapshot();
@@ -45,7 +53,10 @@ it(`Screen компонент рендерится корректно`, () => {
       <Screen
         gameSettings={mockSettings}
         question={undefined}
-        onUserAnswer={mockButtonClick}/>,
+        mistakes={mockMistakes}
+        onUserAnswer={mockButtonClick}
+        onWelcomeScreenClick={mockButtonClick}
+      />,
       {createNodeMock}
   ).toJSON();
   expect(screenComponent3).toMatchSnapshot();
