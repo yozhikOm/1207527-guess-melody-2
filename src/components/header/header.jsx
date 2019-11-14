@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
-const Header = () => {
+const Header = (props) => {
+  const {mistakes} = props;
+
   return (
     <header className="game__header">
       <a className="game__back" href="#">
@@ -25,12 +28,18 @@ const Header = () => {
       </div>
 
       <div className="game__mistakes">
-        <div className="wrong"/>
-        <div className="wrong"/>
-        <div className="wrong"/>
+        {new Array(mistakes).fill(``).map((it, i) => {
+          return (
+            <div key={`mistake-${i}`} className="wrong" />
+          );
+        })}
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  mistakes: PropTypes.number.isRequired,
 };
 
 export {Header};
