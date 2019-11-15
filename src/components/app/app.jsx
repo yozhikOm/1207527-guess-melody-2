@@ -22,7 +22,7 @@ class App extends PureComponent {
     };
 
     return <section className={`game ${Type.ARTIST}`}>
-      {step !== -1 &&
+      {step !== -1 && step !== -2 &&
       <Header
         gameTime={gameTime}
         mistakes={mistakes}
@@ -34,6 +34,7 @@ class App extends PureComponent {
         gameSettings={gameSettings}
         question={question}
         mistakes={mistakes}
+        step={step}
         onWelcomeScreenClick={onWelcomeScreenClick}
         onUserAnswer={onUserAnswer}
       />
@@ -74,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   onTimerTick: () => dispatch(ActionCreator.decrementTime()),
-  onTimeExpired: () => dispatch(ActionCreator.resetGame()),
+  onTimeExpired: () => dispatch(ActionCreator.stopGame()),
 });
 
 export {App};

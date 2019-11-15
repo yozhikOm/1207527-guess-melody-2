@@ -10,13 +10,11 @@ const init = (gameQuestions) => {
   const store = createStore(reducer);
 
   const settings = {
-    // gameTime: 5,
-    errorCount: 3,
+    errorCount: 2,
   };
 
   ReactDOM.render(<Provider store={store}>
     <App
-      // gameTime={settings.gameTime}
       errorCount={settings.errorCount}
       questions={gameQuestions}
     />

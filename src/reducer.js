@@ -46,6 +46,10 @@ const ActionCreator = {
   resetGame: () => ({
     type: `RESET`
   }),
+
+  stopGame: () => ({
+    type: `STOP_GAME`
+  }),
 };
 
 const initialState = {
@@ -69,6 +73,12 @@ const reducer = (state = initialState, action) => {
     });
 
     case `RESET`: return Object.assign({}, initialState);
+
+    case `STOP_GAME`: return Object.assign({}, state, {
+      gameTime: initialState.gameTime,
+      mistakes: initialState.mistakes,
+      step: -2,
+    });
   }
 
   return state;

@@ -4,13 +4,15 @@ import PropTypes from "prop-types";
 class Timer extends PureComponent {
   constructor(props) {
     super(props);
-
-    this._gameTimer = 0;
   }
 
-  _startTimer() {
-    const {onTimerTick} = this.props;
-    this._gameTimer = setInterval(onTimerTick, 1000);
+  _tickTimer() {
+    const {gameTime, onTimerTick, onTimeExpired} = this.props;
+    if (gameTime === 0) {
+      clearInterval(this._gameTimer);
+      return onTimeExpired();
+    }
+    return onTimerTick();
   }
 
   _formatTime(timeInSeconds) {
@@ -26,15 +28,15 @@ class Timer extends PureComponent {
   }
 
   componentDidMount() {
-    this._startTimer();
+    this._gameTimer = setInterval(this._tickTimer.bind(this), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._gameTimer);
   }
 
   render() {
-    const {gameTime, onTimeExpired} = this.props;
-    if (gameTime === 0) {
-      clearInterval(this._gameTimer);
-      onTimeExpired();
-    }
+    const {gameTime} = this.props;
     const time = this._formatTime(gameTime);
 
     return (

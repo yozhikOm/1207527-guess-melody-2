@@ -16,14 +16,15 @@ it(`App компонент рендерится корректно`, () => {
 
   const appComponent = renderer.create(
       <App
+        questions={questions}
         gameTime={10}
         errorCount={2}
+        mistakes={0}
+        step={1}
         onWelcomeScreenClick={jest.fn()}
         onUserAnswer={jest.fn()}
         onTimerTick={jest.fn()}
-        step={1}
-        mistakes={0}
-        questions={questions}
+        onTimeExpired={jest.fn()}
       />,
       {createNodeMock}
   ).toJSON();

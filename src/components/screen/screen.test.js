@@ -30,6 +30,7 @@ it(`Screen компонент рендерится корректно`, () => {
         gameSettings={mockSettings}
         question={mockQuestion1}
         mistakes={mockMistakes}
+        step={1}
         onUserAnswer={mockButtonClick}
         onWelcomeScreenClick={mockButtonClick}
       />,
@@ -42,6 +43,7 @@ it(`Screen компонент рендерится корректно`, () => {
         gameSettings={mockSettings}
         question={mockQuestion2}
         mistakes={mockMistakes}
+        step={2}
         onUserAnswer={mockButtonClick}
         onWelcomeScreenClick={mockButtonClick}
       />,
@@ -54,6 +56,7 @@ it(`Screen компонент рендерится корректно`, () => {
         gameSettings={mockSettings}
         question={undefined}
         mistakes={mockMistakes}
+        step={-1}
         onUserAnswer={mockButtonClick}
         onWelcomeScreenClick={mockButtonClick}
       />,
