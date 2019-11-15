@@ -13,7 +13,7 @@ const Type = {
 
 class App extends PureComponent {
   render() {
-    const {questions, gameTime, errorCount, mistakes, onWelcomeScreenClick, step, onUserAnswer} = this.props;
+    const {questions, gameTime, errorCount, mistakes, step, onWelcomeScreenClick, onUserAnswer, onTimerTick, onTimeExpired} = this.props;
     const question = questions[step];
 
     const gameSettings = {
@@ -22,25 +22,40 @@ class App extends PureComponent {
     };
 
     return <section className={`game ${Type.ARTIST}`}>
-      {step !== -1 && <Header mistakes={mistakes}/>}
+      {step !== -1 &&
+      <Header
+        gameTime={gameTime}
+        mistakes={mistakes}
+        onTimerTick={onTimerTick}
+        onTimeExpired={onTimeExpired}
+      />}
 
-      <Screen gameSettings={gameSettings} question={question} mistakes={mistakes} onWelcomeScreenClick={onWelcomeScreenClick} onUserAnswer={onUserAnswer}/>
+      <Screen
+        gameSettings={gameSettings}
+        question={question}
+        mistakes={mistakes}
+        onWelcomeScreenClick={onWelcomeScreenClick}
+        onUserAnswer={onUserAnswer}
+      />
 
     </section>;
   }
 }
 
 App.propTypes = {
+  questions: PropTypes.array.isRequired,
   gameTime: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.array.isRequired,
-  onWelcomeScreenClick: PropTypes.func.isRequired,
-  step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
+  onTimerTick: PropTypes.func.isRequired,
+  onTimeExpired: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  gameTime: state.gameTime,
   step: state.step,
   mistakes: state.mistakes,
 });
@@ -57,6 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
         maxMistakes
     ));
   },
+
+  onTimerTick: () => dispatch(ActionCreator.decrementTime()),
+  onTimeExpired: () => dispatch(ActionCreator.resetGame()),
 });
 
 export {App};

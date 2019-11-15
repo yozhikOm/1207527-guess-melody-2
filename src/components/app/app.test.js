@@ -20,6 +20,7 @@ it(`App компонент рендерится корректно`, () => {
         errorCount={2}
         onWelcomeScreenClick={jest.fn()}
         onUserAnswer={jest.fn()}
+        onTimerTick={jest.fn()}
         step={1}
         mistakes={0}
         questions={questions}

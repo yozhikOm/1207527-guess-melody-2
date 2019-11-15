@@ -7,6 +7,7 @@ const isGenreAnswerCorrect = (userAnswer, question) =>
   ));
 
 const ActionCreator = {
+
   incrementStep: () => ({
     type: `INCREMENT_STEP`,
     payload: 1,
@@ -36,9 +37,19 @@ const ActionCreator = {
     };
 
   },
+
+  decrementTime: () => ({
+    type: `DECREMENT_TIME`,
+    payload: 1,
+  }),
+
+  resetGame: () => ({
+    type: `RESET`
+  }),
 };
 
 const initialState = {
+  gameTime: 60,
   step: -1,
   mistakes: 0,
 };
@@ -51,6 +62,10 @@ const reducer = (state = initialState, action) => {
 
     case `INCREMENT_MISTAKES`: return Object.assign({}, state, {
       mistakes: state.mistakes + action.payload,
+    });
+
+    case `DECREMENT_TIME`: return Object.assign({}, state, {
+      gameTime: state.gameTime - action.payload,
     });
 
     case `RESET`: return Object.assign({}, initialState);

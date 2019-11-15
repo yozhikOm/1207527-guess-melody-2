@@ -66,6 +66,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     });
   });
 
@@ -73,23 +74,27 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     }, {
       type: `INCREMENT_STEP`,
       payload: 1,
     })).toEqual({
       step: 0,
       mistakes: 0,
+      gameTime: 60,
     });
 
     expect(reducer({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     }, {
       type: `INCREMENT_STEP`,
       payload: 0,
     })).toEqual({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     });
   });
 
@@ -97,23 +102,27 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     }, {
       type: `INCREMENT_MISTAKES`,
       payload: 1,
     })).toEqual({
       step: -1,
       mistakes: 1,
+      gameTime: 60,
     });
 
     expect(reducer({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     }, {
       type: `INCREMENT_MISTAKES`,
       payload: 0
     })).toEqual({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     });
   });
 
@@ -121,11 +130,13 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 20,
       mistakes: 10,
+      gameTime: 60,
     }, {
       type: `RESET`,
     })).toEqual({
       step: -1,
       mistakes: 0,
+      gameTime: 60,
     });
   });
 });

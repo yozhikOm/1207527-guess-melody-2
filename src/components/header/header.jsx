@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {Timer} from '../timer/timer.jsx';
 
 const Header = (props) => {
-  const {mistakes} = props;
+  const {gameTime, mistakes, onTimerTick, onTimeExpired} = props;
 
   return (
     <header className="game__header">
@@ -21,11 +22,7 @@ const Header = (props) => {
         />
       </svg>
 
-      <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-        <span className="timer__mins">05</span>
-        <span className="timer__dots">:</span>
-        <span className="timer__secs">00</span>
-      </div>
+      <Timer gameTime={gameTime} onTimerTick={onTimerTick} onTimeExpired={onTimeExpired} />
 
       <div className="game__mistakes">
         {new Array(mistakes).fill(``).map((it, i) => {
@@ -39,7 +36,10 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
+  gameTime: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
+  onTimerTick: PropTypes.func.isRequired,
+  onTimeExpired: PropTypes.func.isRequired,
 };
 
 export {Header};
