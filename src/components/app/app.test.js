@@ -4,15 +4,29 @@ import renderer from 'react-test-renderer';
 import {questions} from '../../mocks/questions.js';
 
 it(`App компонент рендерится корректно`, () => {
-  const mockSettings = {
-    gameTime: 10,
-    errorCount: 2,
-    onClickStartButton: (() => {})
+  const createNodeMock = () => {
+    return {
+      oncanplaythrough: null,
+      onplay: null,
+      onpause: null,
+      ontimeupdate: null,
+      src: ``
+    };
   };
-  const appComponent = renderer.create(<App
-    errorCount={mockSettings.errorCount}
-    gameTime={mockSettings.gameTime}
-    questions={questions}
-  />).toJSON();
+
+  const appComponent = renderer.create(
+      <App
+        questions={questions}
+        gameTime={10}
+        errorCount={2}
+        mistakes={0}
+        step={1}
+        onWelcomeScreenClick={jest.fn()}
+        onUserAnswer={jest.fn()}
+        storeRemainingTime={jest.fn()}
+        onTimeExpired={jest.fn()}
+      />,
+      {createNodeMock}
+  ).toJSON();
   expect(appComponent).toMatchSnapshot();
 });

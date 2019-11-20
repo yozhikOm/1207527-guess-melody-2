@@ -1,5 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {ActionCreator} from "../../reducer.js";
+
 import {Header} from '../header/header.jsx';
 import {Screen} from '../screen/screen.jsx';
 
@@ -9,61 +12,77 @@ const Type = {
 };
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      questionIndex: -1,
-    };
-  }
-
-  _incrementQIndex() {
-    const {questionIndex} = this.state;
-
-    this.setState({
-      questionIndex: questionIndex + 1 >= this.props.questions.length
-        ? -1
-        : questionIndex + 1,
-    });
-  }
-
   render() {
-    const {
+    const {questions, gameTime, errorCount, mistakes, step, onWelcomeScreenClick, onUserAnswer, storeRemainingTime, onTimeExpired} = this.props;
+    const question = questions[step];
+
+    const gameSettings = {
       gameTime,
       errorCount,
-    } = this.props;
-
-    const {questions} = this.props;
-    const {questionIndex} = this.state;
-
-    const question = questions[questionIndex];
-    const gameSettings = ({gameTime}, {errorCount});
+    };
 
     return <section className={`game ${Type.ARTIST}`}>
-      {this.state.questionIndex !== -1 && <Header/>}
+      {step !== -1 && step !== -2 &&
+      <Header
+        gameTime={gameTime}
+        mistakes={mistakes}
+        storeRemainingTime={storeRemainingTime}
+        onTimeExpired={onTimeExpired}
+      />}
 
-      <Screen gameSettings={gameSettings} question={question} onUserAnswer={this._incrementQIndex.bind(this)}/>
+      <Screen
+        gameSettings={gameSettings}
+        question={question}
+        mistakes={mistakes}
+        step={step}
+        onWelcomeScreenClick={onWelcomeScreenClick}
+        onUserAnswer={onUserAnswer}
+      />
 
     </section>;
   }
 }
 
 App.propTypes = {
+  questions: PropTypes.array.isRequired,
   gameTime: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
-  onStartButtonClick: PropTypes.func,
-  questions: PropTypes.arrayOf(
-      PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        genre: PropTypes.string,
-        answers: PropTypes.arrayOf(
-            PropTypes.shape({
-              src: PropTypes.string,
-              genre: PropTypes.string,
-            }).isRequired
-        ).isRequired,
-      }).isRequired
-  ).isRequired,
+  mistakes: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  onWelcomeScreenClick: PropTypes.func.isRequired,
+  onUserAnswer: PropTypes.func.isRequired,
+  // onTimerTick: PropTypes.func.isRequired,
+  storeRemainingTime: PropTypes.func.isRequired,
+  onTimeExpired: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  gameTime: state.gameTime,
+  step: state.step,
+  mistakes: state.mistakes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onWelcomeScreenClick: () => {
+    dispatch(ActionCreator.resetGame());
+    dispatch(ActionCreator.incrementStep());
+  },
+
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+    dispatch(ActionCreator.incrementStep());
+    dispatch(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    ));
+  },
+
+  // onTimerTick: () => dispatch(ActionCreator.decrementTime()),
+  storeRemainingTime: (gameTime) => dispatch(ActionCreator.storeRemainingTime(gameTime)),
+  onTimeExpired: () => dispatch(ActionCreator.stopGame()),
+});
+
 export {App};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

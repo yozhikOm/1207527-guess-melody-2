@@ -36,6 +36,7 @@ exports[`Screen компонент рендерится корректно 1`] =
           className="game__input visually-hidden"
           id="answer-0"
           name="answer"
+          onChange={[Function]}
           type="checkbox"
           value="answer-0"
         />
@@ -68,6 +69,7 @@ exports[`Screen компонент рендерится корректно 1`] =
           className="game__input visually-hidden"
           id="answer-1"
           name="answer"
+          onChange={[Function]}
           type="checkbox"
           value="answer-1"
         />
@@ -100,6 +102,7 @@ exports[`Screen компонент рендерится корректно 1`] =
           className="game__input visually-hidden"
           id="answer-2"
           name="answer"
+          onChange={[Function]}
           type="checkbox"
           value="answer-2"
         />
@@ -132,6 +135,7 @@ exports[`Screen компонент рендерится корректно 1`] =
           className="game__input visually-hidden"
           id="answer-3"
           name="answer"
+          onChange={[Function]}
           type="checkbox"
           value="answer-3"
         />
@@ -183,7 +187,7 @@ exports[`Screen компонент рендерится корректно 2`] =
   </div>
   <form
     className="game__artist"
-    onChange={[MockFunction]}
+    onChange={[Function]}
   >
     <div
       className="artist"
@@ -294,8 +298,8 @@ exports[`Screen компонент рендерится корректно 3`] =
   >
     <li>
       За 
-      5
-       минут нужно ответить на все вопросы.
+      00 минут 05 секунд
+       нужно ответить на все вопросы.
     </li>
     <li>
       Можно допустить 

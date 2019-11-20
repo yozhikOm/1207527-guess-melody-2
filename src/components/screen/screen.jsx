@@ -3,30 +3,49 @@ import PropTypes from "prop-types";
 import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
 import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
+import {GameOverScreen} from '../game-over-screen/game-over-screen.jsx';
 
-const Screen = ({gameSettings, question, onUserAnswer}) => {
-  if (!question) {
-    const {
-      gameTime,
-      errorCount,
-    } = gameSettings;
+const Screen = ({gameSettings, question, mistakes, step, onWelcomeScreenClick, onUserAnswer}) => {
+  const {
+    gameTime,
+    errorCount,
+  } = gameSettings;
 
+  if (step === -2) {
+    return <GameOverScreen
+      onStartButtonClick={onWelcomeScreenClick}
+    />;
+  }
+
+  // if (!question) {
+  if (step === -1) {
     return <WelcomeScreen
       gameTime={gameTime}
       errorCount={errorCount}
-      onStartButtonClick={onUserAnswer}
+      onStartButtonClick={onWelcomeScreenClick}
     />;
   }
 
   switch (question.type) {
     case `genre`: return <GenreQuestionScreen
+
       question={question}
-      onAnswer={onUserAnswer}
+      onAnswer={(userAnswer) => onUserAnswer(
+          userAnswer,
+          question,
+          mistakes,
+          errorCount
+      )}
     />;
 
     case `artist`: return <ArtistQuestionScreen
       question={question}
-      onAnswer={onUserAnswer}
+      onAnswer={(userAnswer) => onUserAnswer(
+          userAnswer,
+          question,
+          mistakes,
+          errorCount
+      )}
     />;
   }
 
@@ -48,6 +67,10 @@ Screen.propTypes = {
         }).isRequired
     ).isRequired,
   }),
+  onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func,
+  mistakes: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
 };
+
 export {Screen};
