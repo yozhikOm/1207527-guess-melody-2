@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Timer} from '../timer/timer.jsx';
 
 const Header = (props) => {
-  const {gameTime, mistakes, onTimerTick, onTimeExpired} = props;
+  const {gameTime, mistakes, storeRemainingTime, onTimeExpired} = props;
 
   return (
     <header className="game__header">
@@ -22,7 +22,7 @@ const Header = (props) => {
         />
       </svg>
 
-      <Timer gameTime={gameTime} onTimerTick={onTimerTick} onTimeExpired={onTimeExpired} />
+      <Timer gameTime={gameTime} storeRemainingTime={storeRemainingTime} onTimeExpired={onTimeExpired} />
 
       <div className="game__mistakes">
         {new Array(mistakes).fill(``).map((it, i) => {
@@ -38,7 +38,7 @@ const Header = (props) => {
 Header.propTypes = {
   gameTime: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
-  onTimerTick: PropTypes.func.isRequired,
+  storeRemainingTime: PropTypes.func.isRequired,
   onTimeExpired: PropTypes.func.isRequired,
 };
 

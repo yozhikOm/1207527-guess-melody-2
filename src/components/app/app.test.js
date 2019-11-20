@@ -23,7 +23,7 @@ it(`App компонент рендерится корректно`, () => {
         step={1}
         onWelcomeScreenClick={jest.fn()}
         onUserAnswer={jest.fn()}
-        onTimerTick={jest.fn()}
+        storeRemainingTime={jest.fn()}
         onTimeExpired={jest.fn()}
       />,
       {createNodeMock}

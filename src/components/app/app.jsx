@@ -13,7 +13,7 @@ const Type = {
 
 class App extends PureComponent {
   render() {
-    const {questions, gameTime, errorCount, mistakes, step, onWelcomeScreenClick, onUserAnswer, onTimerTick, onTimeExpired} = this.props;
+    const {questions, gameTime, errorCount, mistakes, step, onWelcomeScreenClick, onUserAnswer, storeRemainingTime, onTimeExpired} = this.props;
     const question = questions[step];
 
     const gameSettings = {
@@ -26,7 +26,7 @@ class App extends PureComponent {
       <Header
         gameTime={gameTime}
         mistakes={mistakes}
-        onTimerTick={onTimerTick}
+        storeRemainingTime={storeRemainingTime}
         onTimeExpired={onTimeExpired}
       />}
 
@@ -51,7 +51,8 @@ App.propTypes = {
   step: PropTypes.number.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
-  onTimerTick: PropTypes.func.isRequired,
+  // onTimerTick: PropTypes.func.isRequired,
+  storeRemainingTime: PropTypes.func.isRequired,
   onTimeExpired: PropTypes.func.isRequired,
 };
 
@@ -62,7 +63,10 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
+  onWelcomeScreenClick: () => {
+    dispatch(ActionCreator.resetGame());
+    dispatch(ActionCreator.incrementStep());
+  },
 
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(ActionCreator.incrementStep());
@@ -74,7 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
     ));
   },
 
-  onTimerTick: () => dispatch(ActionCreator.decrementTime()),
+  // onTimerTick: () => dispatch(ActionCreator.decrementTime()),
+  storeRemainingTime: (gameTime) => dispatch(ActionCreator.storeRemainingTime(gameTime)),
   onTimeExpired: () => dispatch(ActionCreator.stopGame()),
 });
 

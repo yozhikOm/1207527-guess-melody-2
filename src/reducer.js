@@ -38,9 +38,14 @@ const ActionCreator = {
 
   },
 
-  decrementTime: () => ({
+  /* decrementTime: () => ({
     type: `DECREMENT_TIME`,
     payload: 1,
+  }), */
+
+  storeRemainingTime: (gameTime) => ({
+    type: `STORE_REMAINING_TIME`,
+    payload: gameTime,
   }),
 
   resetGame: () => ({
@@ -68,8 +73,12 @@ const reducer = (state = initialState, action) => {
       mistakes: state.mistakes + action.payload,
     });
 
-    case `DECREMENT_TIME`: return Object.assign({}, state, {
+      /* case `DECREMENT_TIME`: return Object.assign({}, state, {
       gameTime: state.gameTime - action.payload,
+    }); */
+
+    case `STORE_REMAINING_TIME`: return Object.assign({}, state, {
+      gameTime: action.payload,
     });
 
     case `RESET`: return Object.assign({}, initialState);

@@ -6,7 +6,7 @@ it(`Timer компонент рендерится корректно`, () => {
   const timerComponent = renderer.create(
       <Timer
         gameTime={60}
-        onTimerTick={jest.fn()}
+        storeRemainingTime={jest.fn()}
         onTimeExpired={jest.fn()}
       />).toJSON();
   expect(timerComponent).toMatchSnapshot();

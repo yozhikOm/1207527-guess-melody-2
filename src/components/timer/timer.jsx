@@ -1,12 +1,13 @@
 import React, {PureComponent} from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import {createTimer} from '../../utils/createTimer.js';
 
 class Timer extends PureComponent {
   constructor(props) {
     super(props);
   }
 
-  _tickTimer() {
+  /* _tickTimer() {
     const {gameTime, onTimerTick, onTimeExpired} = this.props;
     if (gameTime === 0) {
       clearInterval(this._gameTimer);
@@ -14,6 +15,7 @@ class Timer extends PureComponent {
     }
     return onTimerTick();
   }
+  */
 
   _formatTime(timeInSeconds) {
     let minutes = Math.floor(timeInSeconds / 60) % 60;
@@ -27,12 +29,25 @@ class Timer extends PureComponent {
     return time;
   }
 
+  _onTimeExpired() {
+    clearInterval(this._gameTimer);
+    this.props.onTimeExpired();
+  }
+
   componentDidMount() {
-    this._gameTimer = setInterval(this._tickTimer.bind(this), 1000);
+    /* this._gameTimer = setInterval(this._tickTimer.bind(this), 1000);*/
+
+    const {gameTime, storeRemainingTime} = this.props;
+
+    const timer = createTimer(gameTime, this._onTimeExpired.bind(this));
+
+    this._gameTimer = setInterval(() => {
+      storeRemainingTime(timer.tick());
+    }, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this._gameTimer);
+    this._onTimeExpired();
   }
 
   render() {
@@ -51,7 +66,7 @@ class Timer extends PureComponent {
 
 Timer.propTypes = {
   gameTime: PropTypes.number.isRequired,
-  onTimerTick: PropTypes.func.isRequired,
+  storeRemainingTime: PropTypes.func.isRequired,
   onTimeExpired: PropTypes.func.isRequired,
 };
 
