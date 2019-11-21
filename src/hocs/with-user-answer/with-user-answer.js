@@ -14,15 +14,9 @@ const withUserAnswer = (Component) => {
     }
 
     _setState(i, isChecked) {
-        const {activePlayer} = this.state;
       this.setState((state) => {
         state.userAnswer[i] = isChecked;
       });
-
-      this.setState((prevState) => ({
-        activePlayer: prevState.activePlayer === i ? -1 : i
-      }))
-
     }
 
     render() {
