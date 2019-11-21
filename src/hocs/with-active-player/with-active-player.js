@@ -9,6 +9,32 @@ const withActivePlayer = (Component) => {
       this.state = {
         activePlayer: -1,
       };
+
+      // this._setActivePlayer = this._setActivePlayer.bind(this);
+      this.playButtonClickHandlers = {};
+    }
+
+    /* _setActivePlayer(i){
+      const {activePlayer} = this.state;
+
+      this.setState({
+        activePlayer: activePlayer === i ? -1 : i
+      });
+
+    }*/
+
+    _onPlayButtonClick(id) {
+      if (!this.playButtonClickHandlers.hasOwnProperty(id)) {
+        // Если обработчика нет, то создаем его и кешируем. Если он уже создан, то берем из кеша.
+        this.playButtonClickHandlers[id] = () => {
+          const {activePlayer} = this.state;
+          this.setState({
+            activePlayer: activePlayer === id ? -1 : id
+          });
+        };
+      }
+
+      return this.playButtonClickHandlers[id];
     }
 
     render() {
@@ -19,9 +45,7 @@ const withActivePlayer = (Component) => {
           return <AudioPlayer
             src={it.src}
             isPlaying={i === activePlayer}
-            onPlayButtonClick={() => this.setState((prevState) => ({
-              activePlayer: prevState.activePlayer === i ? -1 : i
-            }))}
+            onPlayButtonClick={this._onPlayButtonClick(i)}
           />;
         }}
       />;
