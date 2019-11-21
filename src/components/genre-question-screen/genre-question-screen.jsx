@@ -5,27 +5,29 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {question} = this.props;
+    /* const {question} = this.props;
     const {answers} = question;
 
-    this.state = {
+     this.state = {
       userAnswer: new Array(answers.length).fill(false),
-    };
+    };*/
 
     this._handleCheckboxChange = this._handleCheckboxChange.bind(this);
   }
 
   _handleCheckboxChange(evt) {
+    const {setState} = this.props;
     const isChecked = evt.target.checked;
     const i = evt.target.id.split(`-`)[1];
 
-    this.setState((state) => {
+    setState(i, isChecked);
+    /* this.setState((state) => {
       state.userAnswer[i] = isChecked;
-    });
+    });*/
   }
 
   render() {
-    const {question, step, onAnswer, renderPlayer} = this.props;
+    const {question, step, onAnswer, renderPlayer, userAnswer} = this.props;
     const {answers, genre} = question;
 
     return (
@@ -33,7 +35,8 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer(this.state.userAnswer);
+          // onAnswer(this.state.userAnswer);
+          onAnswer(userAnswer);
         }}>
           {answers.map((it, i) => {
             return (
@@ -72,6 +75,8 @@ GenreQuestionScreen.propTypes = {
   }).isRequired,
   step: PropTypes.number,
   renderPlayer: PropTypes.func.isRequired,
+  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  setState: PropTypes.func,
 };
 
 export {GenreQuestionScreen};

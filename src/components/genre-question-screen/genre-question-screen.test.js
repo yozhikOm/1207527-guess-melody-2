@@ -9,6 +9,7 @@ it(`GenreQuestionScreen компонент рендерится корректн
   const mockButtonClick = jest.fn();
   const mockQuestion = questions.find((q) => q.type === `genre`);
   const mockStep = 0;
+  const mockUserAnswer = [false, false, true, false];
   const createNodeMock = () => {
     return {
       oncanplaythrough: null,
@@ -25,6 +26,8 @@ it(`GenreQuestionScreen компонент рендерится корректн
         onAnswer={mockButtonClick}
         step={mockStep}
         renderPlayer={jest.fn()}
+        userAnswer={mockUserAnswer}
+        setState={jest.fn()}
       />,
       {createNodeMock}
   ).toJSON();

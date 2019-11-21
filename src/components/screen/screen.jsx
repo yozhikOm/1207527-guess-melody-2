@@ -5,8 +5,9 @@ import {GenreQuestionScreen} from '../genre-question-screen/genre-question-scree
 import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
 import {GameOverScreen} from '../game-over-screen/game-over-screen.jsx';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player.js';
+import withUserAnswer from '../../hocs/with-user-answer/with-user-answer.js'
 
-const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
+const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 const Screen = ({gameSettings, question, mistakes, step, onWelcomeScreenClick, onUserAnswer}) => {

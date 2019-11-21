@@ -26,7 +26,7 @@ const withActivePlayer = (Component) => {
         }}
       />;
     }
-  } 
+  }
 
   WithActivePlayer.propTypes = {};
 

@@ -10,7 +10,7 @@ const init = (gameQuestions) => {
   const store = createStore(reducer);
 
   const settings = {
-    errorCount: 2,
+    errorCount: 3,
   };
 
   ReactDOM.render(<Provider store={store}>
