@@ -15,8 +15,13 @@ describe(`Enzyme тест change'а формы`, () => {
         id: `answer-1`
       }
     };
+    const mockRenderPlayer = jest.fn();
 
-    const wrapper = shallow(<ArtistQuestionScreen question={mockQuestion} onAnswer={mockButtonClick}/>);
+    const wrapper = shallow(<ArtistQuestionScreen
+      question={mockQuestion}
+      onAnswer={mockButtonClick}
+      renderPlayer={mockRenderPlayer}
+    />);
     wrapper.find(`form`).simulate(`change`, mockEvent);
     expect(mockButtonClick).toHaveBeenCalled();
   });

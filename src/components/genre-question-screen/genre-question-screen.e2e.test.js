@@ -15,8 +15,13 @@ describe(`Enzyme тест submit'а формы`, () => {
     const mockEvent = {
       preventDefault: mockPreventDefault
     };
+    const mockRenderPlayer = jest.fn();
 
-    const wrapper = shallow(<GenreQuestionScreen question={mockQuestion} onAnswer={mockButtonClick}/>);
+    const wrapper = shallow(<GenreQuestionScreen
+      question={mockQuestion}
+      onAnswer={mockButtonClick}
+      renderPlayer={mockRenderPlayer}
+    />);
     wrapper.find(`form`).simulate(`submit`, mockEvent);
     expect(mockButtonClick).toHaveBeenCalled();
   });

@@ -4,6 +4,10 @@ import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 import {GenreQuestionScreen} from '../genre-question-screen/genre-question-screen.jsx';
 import {ArtistQuestionScreen} from '../artist-question-screen/artist-question-screen.jsx';
 import {GameOverScreen} from '../game-over-screen/game-over-screen.jsx';
+import withActivePlayer from '../../hocs/with-active-player/with-active-player.js';
+
+const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
+const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 const Screen = ({gameSettings, question, mistakes, step, onWelcomeScreenClick, onUserAnswer}) => {
   const {
@@ -27,7 +31,7 @@ const Screen = ({gameSettings, question, mistakes, step, onWelcomeScreenClick, o
   }
 
   switch (question.type) {
-    case `genre`: return <GenreQuestionScreen
+    case `genre`: return <GenreQuestionScreenWrapped
 
       question={question}
       onAnswer={(userAnswer) => onUserAnswer(
@@ -38,7 +42,7 @@ const Screen = ({gameSettings, question, mistakes, step, onWelcomeScreenClick, o
       )}
     />;
 
-    case `artist`: return <ArtistQuestionScreen
+    case `artist`: return <ArtistQuestionScreenWrapped
       question={question}
       onAnswer={(userAnswer) => onUserAnswer(
           userAnswer,

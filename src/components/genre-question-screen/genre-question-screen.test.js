@@ -24,6 +24,7 @@ it(`GenreQuestionScreen компонент рендерится корректн
         question={mockQuestion}
         onAnswer={mockButtonClick}
         step={mockStep}
+        renderPlayer={jest.fn()}
       />,
       {createNodeMock}
   ).toJSON();

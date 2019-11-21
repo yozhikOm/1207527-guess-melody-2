@@ -6,6 +6,7 @@ import {questions} from '../../mocks/questions.js';
 it(`ArtistQuestionScreen компонент рендерится корректно`, () => {
   const mockButtonClick = jest.fn();
   const mockQuestion = questions.find((q) => q.type === `artist`);
+  const mockRenderPlayer = jest.fn();
 
   const createNodeMock = () => {
     return {
@@ -20,7 +21,9 @@ it(`ArtistQuestionScreen компонент рендерится коррект�
   const artistQuestionScreenComponent = renderer.create(
       <ArtistQuestionScreen
         question={mockQuestion}
-        onAnswer={mockButtonClick}/>,
+        onAnswer={mockButtonClick}
+        renderPlayer={mockRenderPlayer}
+      />,
       {createNodeMock})
       .toJSON();
   expect(artistQuestionScreenComponent).toMatchSnapshot();
