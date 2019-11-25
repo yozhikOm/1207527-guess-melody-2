@@ -1,33 +1,24 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {AudioPlayer} from '../audioplayer/audioplayer.jsx';
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {question} = this.props;
-    const {answers} = question;
-
-    this.state = {
-      activePlayer: -1,
-      userAnswer: new Array(answers.length).fill(false),
-    };
-
     this._handleCheckboxChange = this._handleCheckboxChange.bind(this);
   }
 
   _handleCheckboxChange(evt) {
+    const {userAnswer, setState} = this.props;
     const isChecked = evt.target.checked;
     const i = evt.target.id.split(`-`)[1];
-
-    this.setState((state) => {
-      state.userAnswer[i] = isChecked;
-    });
+    let updatedUserAnswer = userAnswer;
+    updatedUserAnswer[i] = isChecked;
+    setState(updatedUserAnswer);
   }
 
   render() {
-    const {question, step, onAnswer} = this.props;
+    const {question, step, onAnswer, renderPlayer, userAnswer} = this.props;
     const {answers, genre} = question;
 
     return (
@@ -35,18 +26,12 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer(this.state.userAnswer);
+          onAnswer(userAnswer);
         }}>
           {answers.map((it, i) => {
             return (
               <div key={`${step}-answer-${i}`} className="track">
-                <AudioPlayer
-                  src={it.src}
-                  isPlaying={i === this.state.activePlayer}
-                  onPlayButtonClick={() => this.setState({
-                    activePlayer: this.state.activePlayer === i ? -1 : i
-                  })}
-                />
+                {renderPlayer(it, i)}
                 <div className="game__answer">
                   <input
                     className="game__input visually-hidden"
@@ -79,6 +64,9 @@ GenreQuestionScreen.propTypes = {
     type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
   }).isRequired,
   step: PropTypes.number,
+  renderPlayer: PropTypes.func.isRequired,
+  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  setState: PropTypes.func,
 };
 
 export {GenreQuestionScreen};
