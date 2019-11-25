@@ -5,25 +5,16 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    /* const {question} = this.props;
-    const {answers} = question;
-
-     this.state = {
-      userAnswer: new Array(answers.length).fill(false),
-    };*/
-
     this._handleCheckboxChange = this._handleCheckboxChange.bind(this);
   }
 
   _handleCheckboxChange(evt) {
-    const {setState} = this.props;
+    const {userAnswer, setState} = this.props;
     const isChecked = evt.target.checked;
     const i = evt.target.id.split(`-`)[1];
-
-    setState(i, isChecked);
-    /* this.setState((state) => {
-      state.userAnswer[i] = isChecked;
-    });*/
+    let updatedUserAnswer = userAnswer;
+    updatedUserAnswer[i] = isChecked;
+    setState(updatedUserAnswer);
   }
 
   render() {
@@ -35,7 +26,6 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
-          // onAnswer(this.state.userAnswer);
           onAnswer(userAnswer);
         }}>
           {answers.map((it, i) => {

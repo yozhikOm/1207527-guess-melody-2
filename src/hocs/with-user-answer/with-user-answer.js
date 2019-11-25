@@ -13,10 +13,8 @@ const withUserAnswer = (Component) => {
       this._setState = this._setState.bind(this);
     }
 
-    _setState(i, isChecked) {
-      this.setState((state) => {
-        state.userAnswer[i] = isChecked;
-      });
+    _setState(updatedUserAnswer) {
+      this.setState({userAnswer: updatedUserAnswer});
     }
 
     render() {
