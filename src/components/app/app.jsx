@@ -60,6 +60,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   gameTime: state.gameTime,
   step: state.step,
   mistakes: state.mistakes,
+  questions: state.questions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

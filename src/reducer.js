@@ -55,12 +55,18 @@ const ActionCreator = {
   stopGame: () => ({
     type: `STOP_GAME`
   }),
+
+  loadQuestions: (questions) => ({
+    type: `LOAD_QUESTIONS`,
+    payload: questions,
+  }),
 };
 
 const initialState = {
   gameTime: 60,
   step: -1,
   mistakes: 0,
+  questions: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -88,9 +94,23 @@ const reducer = (state = initialState, action) => {
       mistakes: initialState.mistakes,
       step: -2,
     });
+
+    case `LOAD_QUESTIONS`: return Object.assign({}, state, {
+      questions: action.payload,
+    });
   }
 
   return state;
+};
+
+const Operation = {
+  loadQuestions: () => (dispatch, _, api) => {
+    return api.get(`questions`)
+      .then(({data}) => {
+        dispatch(ActionCreator.loadQuestions(data));
+      });
+  },
+
 };
 
 export {
@@ -98,4 +118,5 @@ export {
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
   reducer,
+  Operation,
 };
